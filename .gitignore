@@ -2,7 +2,6 @@
 original/
 checkpoints*/
 scripts/
-*.sh
 *_old.*
 *_temp.*
 
