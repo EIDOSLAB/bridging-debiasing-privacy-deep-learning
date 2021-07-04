@@ -56,7 +56,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     accs = {
         'target': topk_accuracy(outputs, targets, topk=1),
         'bias': topk_accuracy(outputs, bias_targets, topk=1),
-        'f_target': topk_accuracy(f_outputs, target, topk=1)
+        'f_target': topk_accuracy(f_outputs, targets, topk=1)
     }
 
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
