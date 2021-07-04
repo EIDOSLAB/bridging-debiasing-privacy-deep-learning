@@ -63,7 +63,7 @@ def main(config):
     encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
     for key in list(checkpoint['f_net'].keys()):
         checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
-        
+
     encoder.load_state_dict(checkpoint['f_net'])
     encoder = encoder.to(device)
     encoder.eval()
@@ -118,7 +118,7 @@ def main(config):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--root', type=str, default=f'{os.path.expanduser("~")}/data')
+    parser.add_argument('--root', type=str, default=f'{os.path.expanduser("~")}/data/MNIST')
     parser.add_argument('--rho', type=float, required=True)
     parser.add_argument('--crit', type=str, choices=['vanilla', 'rubi', 'rebias', 'learned-mixin'], required=True)
     config = parser.parse_args()
