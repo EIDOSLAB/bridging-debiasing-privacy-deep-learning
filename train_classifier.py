@@ -10,11 +10,8 @@ import wandb
 from tqdm import tqdm
 
 def topk_accuracy(outputs, labels, topk=1):
-    print(outputs.shape)
     outputs = torch.softmax(outputs, dim=1)
-    print(outputs.shape)
     _, preds = outputs.topk(topk, dim=1)
-    print(preds.shape)
     
     preds = preds.t()
     correct = preds.eq(labels.view(1, -1).expand_as(preds)).sum()
@@ -26,6 +23,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     tot_loss = 0.
     outputs = []
     targets = []
+    f_outputs = []
     bias_targets = []
 
     classifier.train(train)
@@ -33,7 +31,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
         data, target, bias_target = data.to(device), target.to(device), bias_target.to(device)
         
         with torch.no_grad():
-            _, feats = encoder(data)
+            f_output, feats = encoder(data)
 
         with torch.set_grad_enabled(train):
             output = classifier(feats)
@@ -48,14 +46,17 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
         outputs.append(output.detach().float())
         targets.append(target)
         bias_targets.append(bias_target)
+        f_outputs.append(f_output.detach().float())
 
     outputs = torch.cat(outputs, dim=0)
     targets = torch.cat(targets, dim=0)
     bias_targets = torch.cat(bias_targets, dim=0)
+    f_outputs = torch.cat(f_outputs, dim=0)
 
     accs = {
         'target': topk_accuracy(outputs, targets, topk=1),
-        'bias': topk_accuracy(outputs, bias_targets, topk=1)
+        'bias': topk_accuracy(outputs, bias_targets, topk=1),
+        'f_target': topk_accuracy(f_outputs, target, topk=1)
     }
 
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
