@@ -87,7 +87,7 @@ def main(config):
                                                         n_confusing_labels=9,
                                                         train=False)
                                                         
-    val_loaders['rho0'] = get_biased_mnist_dataloader(config.rootot, batch_size=batch_size,
+    val_loaders['rho0'] = get_biased_mnist_dataloader(config.root, batch_size=batch_size,
                                                       data_label_correlation=0,
                                                       n_confusing_labels=9,
                                                       train=False)
