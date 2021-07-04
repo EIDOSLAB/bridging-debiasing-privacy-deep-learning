@@ -35,6 +35,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
             loss = criterion(output, target)
 
         if train:
+            #print(target, output)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -53,10 +54,11 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
 
 def main(config):
-    device = torch.device('cuda')
+    device = torch.device('cpu')
+    encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
+
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho}.pth'), map_location='cpu')
     
-    encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
     for key in list(checkpoint['f_net'].keys()):
         checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
 
@@ -65,9 +67,7 @@ def main(config):
     encoder.eval()
 
     classifier = nn.Sequential(
-        nn.Linear(128, 64),
-        nn.ReLU(),
-        nn.Linear(64, 10)
+        nn.Linear(128, 10)
     ).to(device)
 
     optimizer = torch.optim.SGD(classifier.parameters(), lr=0.01)
