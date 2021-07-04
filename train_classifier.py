@@ -75,7 +75,7 @@ def main(config):
     for key in list(checkpoint['f_net'].keys()):
         checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
 
-    #encoder.load_state_dict(checkpoint['f_net'])
+    encoder.load_state_dict(checkpoint['f_net'])
     encoder = encoder.to(device)
     encoder.eval()
 
