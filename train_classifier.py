@@ -50,9 +50,8 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
 
     accs = {
         'top1': topk_accuracy(outputs, targets, topk=1),
-        'top3': topk_accuracy(outputs, targets, topk=3),
-        'top5': topk_accuracy(outputs, targets, topk=5)
     }
+
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
 
 def main(config):
@@ -74,6 +73,7 @@ def main(config):
     ).to(device)
 
     optimizer = torch.optim.SGD(classifier.parameters(), lr=0.01)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     criterion = nn.CrossEntropyLoss()
 
     batch_size = 256
@@ -103,7 +103,7 @@ def main(config):
         config=config
     )
 
-    for epoch in range(100):
+    for epoch in range(150):
         train_logs = run(encoder, classifier, tr_loader, criterion, optimizer, device)
         wandb.log({'train': train_logs}, commit=False)
 
@@ -114,6 +114,7 @@ def main(config):
         wandb.log({'epoch': epoch+1})
 
         torch.save(classifier, os.path.join('checkpoints', config.crit, f'bias-classifier{config.rho}.pth'))
+        scheduler.step()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
