@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 # VANILLA
 python3 train_classifier.py --rho 0.999 --crit vanilla --root ~/mnist
