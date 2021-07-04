@@ -22,20 +22,20 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     tot_loss = 0.
     outputs = []
     targets = []
+    bias_targets = []
 
     classifier.train(train)
-    for data, _, target in tqdm(dataloader):
-        data, target = data.to(device), target.to(device)
+    for data, target, bias_target in tqdm(dataloader):
+        data, target, bias_target = data.to(device), target.to(device), bias_target.to(device)
         
         with torch.no_grad():
             _, feats = encoder(data)
 
         with torch.set_grad_enabled(train):
             output = classifier(feats)
-            loss = criterion(output, target)
+            loss = criterion(output, bias_target)
 
         if train:
-            #print(target, output)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -43,12 +43,15 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
         tot_loss += loss.item()
         outputs.append(output.detach().float())
         targets.append(target)
+        bias_targets.append(bias_target)
 
     outputs = torch.cat(outputs, dim=0)
     targets = torch.cat(targets, dim=0)
+    bias_targets = torch.cat(bias_targets, dim=0)
 
     accs = {
-        'top1': topk_accuracy(outputs, targets, topk=1),
+        'target': topk_accuracy(outputs, targets, topk=1),
+        'bias': topk_accuracy(outputs, bias_targets, topk=1)
     }
 
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
