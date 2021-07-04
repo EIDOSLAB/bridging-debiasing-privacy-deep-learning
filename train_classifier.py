@@ -70,7 +70,7 @@ def main(config):
     device = torch.device('cuda')
     encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
 
-    checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho}.pth'), map_location='cpu')
+    checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho:.3f}.pth'), map_location='cpu')
     
     for key in list(checkpoint['f_net'].keys()):
         checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
