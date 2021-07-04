@@ -34,9 +34,8 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
 
         with torch.set_grad_enabled(train):
             output = classifier(feats)
-            loss = criterion(output, target)
+            loss = criterion(output, bias_labels)
 
-        
         if train:
             optimizer.zero_grad()
             loss.backward()
