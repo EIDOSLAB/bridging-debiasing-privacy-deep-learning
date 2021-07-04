@@ -72,13 +72,13 @@ def main(config):
         nn.Linear(64, 10)
     ).to(device)
 
-    optimizer = torch.optim.SGD(classifier.parameters(), lr=0.0001)
+    optimizer = torch.optim.SGD(classifier.parameters(), lr=0.01)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
     criterion = nn.CrossEntropyLoss()
 
     batch_size = 256
     tr_loader = get_biased_mnist_dataloader(config.root, batch_size=batch_size,
-                                            data_label_correlation=0.1,
+                                            data_label_correlation=0.999,
                                             n_confusing_labels=9,
                                             train=True)
     val_loaders = {}
