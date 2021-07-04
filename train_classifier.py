@@ -26,15 +26,15 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     print('Train enabled =', train)
 
     classifier.train(train)
-    for data, target, bias_labels in tqdm(dataloader):
-        data, target = data.to(device), target.to(device), bias_labels.to(device)
+    for data, _, target in tqdm(dataloader):
+        data, target = data.to(device), target.to(device)
         
         with torch.no_grad():
             _, feats = encoder(data)
 
         with torch.set_grad_enabled(train):
             output = classifier(feats)
-            loss = criterion(output, bias_labels)
+            loss = criterion(output, target)
 
         if train:
             optimizer.zero_grad()
