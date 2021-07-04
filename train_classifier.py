@@ -23,8 +23,6 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     outputs = []
     targets = []
 
-    print('Train enabled =', train)
-
     classifier.train(train)
     for data, _, target in tqdm(dataloader):
         data, target = data.to(device), target.to(device)
@@ -103,13 +101,17 @@ def main(config):
         config=config
     )
 
+    print(config)
+
     for epoch in range(50):
         train_logs = run(encoder, classifier, tr_loader, criterion, optimizer, device)
         wandb.log({'train': train_logs}, commit=False)
+        print('Train:', train_logs)
 
         for key, val_loader in val_loaders.items():
             val_log = run(encoder, classifier, val_loader, criterion, None, device)
             wandb.log({key: val_log}, commit=False)
+            print(key, val_log)
         
         wandb.log({'epoch': epoch+1})
 
