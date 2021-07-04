@@ -10,8 +10,12 @@ import wandb
 from tqdm import tqdm
 
 def topk_accuracy(outputs, labels, topk=1):
+    print(outputs.shape)
     outputs = torch.softmax(outputs, dim=1)
+    print(outputs.shape)
     _, preds = outputs.topk(topk, dim=1)
+    print(preds.shape)
+    
     preds = preds.t()
     correct = preds.eq(labels.view(1, -1).expand_as(preds)).sum()
     return 100.*(correct / float(len(outputs))).cpu().item()
@@ -57,7 +61,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
 
 def main(config):
-    device = torch.device('cpu')
+    device = torch.device('cuda')
     encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
 
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho}.pth'), map_location='cpu')
@@ -98,11 +102,11 @@ def main(config):
                                                           n_confusing_labels=9,
                                                           train=False)
 
-    wandb.init(
+    """wandb.init(
         project='rebias-classifiers',
         job_type='bias-classifier',
         config=config
-    )
+    )"""
 
     print(config)
 
