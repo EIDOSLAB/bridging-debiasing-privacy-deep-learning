@@ -9,13 +9,18 @@ import os
 import wandb
 from tqdm import tqdm
 
-def topk_accuracy(outputs, labels, topk=1):
+
+"""def topk_accuracy(outputs, labels, topk=1):
     outputs = torch.softmax(outputs, dim=1)
     _, preds = outputs.topk(topk, dim=1)
     
     preds = preds.t()
     correct = preds.eq(labels.view(1, -1).expand_as(preds)).sum()
-    return 100.*(correct / float(len(outputs))).cpu().item()
+    return 100.*(correct / float(len(outputs))).cpu().item()"""
+
+def topk_accuracy(outputs, labels, topk=1):
+    _, predictions = torch.max(outputs, dim=1)
+    return (predictions == labels).sum() / float(len(labels))
 
 def run(encoder, classifier, dataloader, criterion, optimizer, device):
     train = optimizer is not None
