@@ -61,6 +61,9 @@ def main(config):
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho}.pth'), map_location='cpu')
     
     encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
+    for key in list(checkpoint['f_net'].keys()):
+        checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
+        
     encoder.load_state_dict(checkpoint['f_net'])
     encoder = encoder.to(device)
     encoder.eval()
