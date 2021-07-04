@@ -113,13 +113,13 @@ def main(config):
 
     for epoch in range(50):
         train_logs = run(encoder, classifier, tr_loader, criterion, optimizer, device)
-        wandb.log({'train': train_logs}, commit=False)
         print('Train:', train_logs)
+        wandb.log({'train': train_logs}, commit=False)
 
         for key, val_loader in val_loaders.items():
             val_log = run(encoder, classifier, val_loader, criterion, None, device)
-            wandb.log({key: val_log}, commit=False)
             print(key, val_log)
+            wandb.log({key: val_log}, commit=False)
         
         wandb.log({'epoch': epoch+1})
 
