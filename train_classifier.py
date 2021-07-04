@@ -108,11 +108,11 @@ def main(config):
                                                           n_confusing_labels=9,
                                                           train=False)
 
-    """wandb.init(
+    wandb.init(
         project='rebias-classifiers',
         job_type='bias-classifier',
         config=config
-    )"""
+    )
 
     print(config)
 
