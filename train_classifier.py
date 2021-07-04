@@ -113,7 +113,7 @@ def main(config):
         
         wandb.log({'epoch': epoch+1})
 
-        torch.save(os.path.join('checkpoints', config.crit, f'bias-classifier{config.rho}.pth'))
+        torch.save(classifier, os.path.join('checkpoints', config.crit, f'bias-classifier{config.rho}.pth'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
