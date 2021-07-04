@@ -20,7 +20,7 @@ from tqdm import tqdm
 
 def topk_accuracy(outputs, labels, topk=1):
     _, predictions = torch.max(outputs, dim=1)
-    return (predictions == labels).sum() / float(len(labels))
+    return (predictions == labels).sum().float() / float(len(labels))
 
 def run(encoder, classifier, dataloader, criterion, optimizer, device):
     train = optimizer is not None
