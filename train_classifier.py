@@ -73,7 +73,7 @@ def main(config):
     ).to(device)
 
     optimizer = torch.optim.SGD(classifier.parameters(), lr=0.01)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1)
     criterion = nn.CrossEntropyLoss()
 
     batch_size = 256
@@ -103,7 +103,7 @@ def main(config):
         config=config
     )
 
-    for epoch in range(150):
+    for epoch in range(50):
         train_logs = run(encoder, classifier, tr_loader, criterion, optimizer, device)
         wandb.log({'train': train_logs}, commit=False)
 
