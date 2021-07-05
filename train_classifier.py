@@ -68,7 +68,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
 
 def main(config):
     device = torch.device('cuda')
-    encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post', 'norm': config.crit == 'end'})
+    encoder = SimpleConvNet(num_classes=10, kernel_size=7, feature_pos='post', norm=(config.crit == 'end'))
 
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho:.3f}.pth'), map_location='cpu')
     
