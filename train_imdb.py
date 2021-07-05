@@ -272,6 +272,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=256)
     parser.add_argument('--seed', type=int, default=42)
     config = parser.parse_args()
-    config.dataset = 'celeba'
+    config.dataset = 'imdb'
 
     main(config)
