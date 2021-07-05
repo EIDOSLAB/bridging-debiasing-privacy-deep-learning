@@ -78,7 +78,8 @@ def main(config):
         encoder.load_state_dict(checkpoint['f_net'])
     else:
         encoder.load_state_dict(checkpoint['model'])
-        
+
+    print(encoder)    
     encoder = encoder.to(device)
     encoder.eval()
 
