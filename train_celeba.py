@@ -213,7 +213,6 @@ def main(config):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--root', type=str, default=f'{os.path.expanduser("~")}/data/MNIST')
     parser.add_argument('--target_attr', type=str, required=True)
     parser.add_argument('--crit', type=str, choices=['vanilla', 'end'], required=True)
     parser.add_argument('--batch_size', type=int, default=256)
