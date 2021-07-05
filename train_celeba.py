@@ -169,8 +169,8 @@ def main(config):
     device = torch.device('cuda')
     encoder = resnet18(n_classes=2)
 
-    checkpoint = torch.load(os.path.join('checkpoints', 'celeba', config.crit, f'model{config.target_attr}.pth'), map_location='cpu')
-    encoder.load_state_dict(checkpoint['model'])
+    #checkpoint = torch.load(os.path.join('checkpoints', 'celeba', config.crit, f'model{config.target_attr}.pth'), map_location='cpu')
+    #encoder.load_state_dict(checkpoint['model'])
     encoder = encoder.to(device)
     encoder.eval()
 
