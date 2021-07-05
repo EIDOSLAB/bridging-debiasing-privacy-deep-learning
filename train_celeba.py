@@ -4,6 +4,11 @@ from torch.serialization import load
 import torchvision
 from datasets import celeba
 import numpy as np
+import argparse
+import os
+
+import wandb
+from tqdm import tqdm
 
 class pattern_norm(torch.nn.Module):
     def __init__(self, scale = 1.0):
@@ -56,11 +61,6 @@ def resnet18(n_classes):
     model.fc = torch.nn.Linear(in_features=512, out_features=n_classes, bias=True)
     return ResNetWrapper(model)
 
-import argparse
-import os
-
-import wandb
-from tqdm import tqdm
 
 def load_celeba(config, shuffle=True):
     bias_attr = 'Male'
