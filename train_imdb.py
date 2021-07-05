@@ -67,7 +67,7 @@ def resnet18(n_classes):
 
 
 def load_imdb(config, shuffle=True):
-    cache_p = float(os.environ.get('DATASET_CACHE', 0.99))
+    cache_p = float(os.environ.get('DATASET_CACHE', 0.50))
     print(f'=> Caching {cache_p*100:.2f}% of data')
 
     mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
