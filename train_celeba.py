@@ -30,7 +30,7 @@ class ResNetWrapper(torch.nn.Module):
         self.m = model
         self.feature_pos = 'post'
 
-    def forward(self, x: torch.Tensor, logits_only=True) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, logits_only=False) -> torch.Tensor:
         x = self.m.conv1(x)
         x = self.m.bn1(x)
         x = self.m.relu(x)
@@ -168,7 +168,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
 
 def main(config):
     utils.set_seed(config.seed)
-    
+
     device = torch.device('cuda')
     encoder = resnet18(n_classes=2)
 
