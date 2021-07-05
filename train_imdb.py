@@ -92,7 +92,7 @@ def load_imdb(config, shuffle=True):
                                     target=config.target_attr)
     train_dataset = td.datasets.WrapDataset(train_dataset_src)
     train_dataset.map(td.maps.To(T_resize, 0))
-    train_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(train_dataset)))
+    train_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(train_dataset), td.cachers.Memory()))
     train_dataset.map(td.maps.To(T_train, 0))
                                 
     eb_dataset = imdb.IMDB(root=f'{os.path.expanduser("~")}/data', 
@@ -101,7 +101,7 @@ def load_imdb(config, shuffle=True):
                             target=config.target_attr)
     eb_dataset = td.datasets.WrapDataset(eb_dataset)
     eb_dataset.map(td.maps.To(T_test, 0))
-    eb_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(eb_dataset)))
+    eb_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(eb_dataset), td.cachers.Memory()))
 
     test_dataset = imdb.IMDB(root=f'{os.path.expanduser("~")}/data', 
                                 train=False, 
@@ -109,7 +109,7 @@ def load_imdb(config, shuffle=True):
                                 target=config.target_attr)
     test_dataset = td.datasets.WrapDataset(test_dataset)
     test_dataset.map(td.maps.To(T_test, 0))
-    test_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(test_dataset)))
+    test_dataset.cache(td.modifiers.UpToPercentage(cache_p, len(test_dataset), td.cachers.Memory()))
 
     # 4-Fold on test dataset
     kfold = StratifiedKFold(n_splits=4, shuffle=True, random_state=42)
