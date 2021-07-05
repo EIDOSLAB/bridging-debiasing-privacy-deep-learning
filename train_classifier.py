@@ -72,10 +72,13 @@ def main(config):
 
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho:.3f}.pth'), map_location='cpu')
     
-    for key in list(checkpoint['f_net'].keys()):
-        checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
-
-    encoder.load_state_dict(checkpoint['f_net'])
+    if config.crit != 'end':
+        for key in list(checkpoint['f_net'].keys()):
+            checkpoint['f_net'][key.replace('module.', '')] = checkpoint['f_net'].pop(key)
+        encoder.load_state_dict(checkpoint['f_net'])
+    else:
+        encoder.load_state_dict(checkpoint['model'])
+        
     encoder = encoder.to(device)
     encoder.eval()
 
