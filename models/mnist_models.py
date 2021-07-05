@@ -6,10 +6,24 @@ Implementation for simple statcked convolutional networks.
 """
 import torch
 import torch.nn as nn
+import numpy as np
+
+class pattern_norm(torch.nn.Module):
+    def __init__(self, scale = 1.0):
+        super(pattern_norm, self).__init__()
+        self.scale = scale
+
+    def forward(self, input):
+        sizes = input.size()
+        if len(sizes) > 2:
+            input = input.view(-1, np.prod(sizes[1:]))
+            input = torch.nn.functional.normalize(input, p=2, dim=1, eps=1e-12)
+            input = input.view(sizes)
+        return input
 
 
 class SimpleConvNet(nn.Module):
-    def __init__(self, num_classes=None, kernel_size=7, feature_pos='post'):
+    def __init__(self, num_classes=None, kernel_size=7, feature_pos='post', norm=False):
         super(SimpleConvNet, self).__init__()
         padding = kernel_size // 2
         layers = [
@@ -28,7 +42,9 @@ class SimpleConvNet(nn.Module):
         ]
         self.extracter = nn.Sequential(*layers)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.pattern_norm = pattern_norm()
         self.fc = nn.Linear(128, 10)
+        self.norm = norm
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -45,6 +61,8 @@ class SimpleConvNet(nn.Module):
     def forward(self, x, logits_only=False):
         pre_gap_feats = self.extracter(x)
         post_gap_feats = self.avgpool(pre_gap_feats)
+        if self.norm:
+            post_gap_feats = self.pattern_norm(post_gap_feats)
         post_gap_feats = torch.flatten(post_gap_feats, 1)
         logits = self.fc(post_gap_feats)
 

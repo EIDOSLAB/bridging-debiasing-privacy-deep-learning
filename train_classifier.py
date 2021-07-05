@@ -68,7 +68,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
 
 def main(config):
     device = torch.device('cuda')
-    encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post'})
+    encoder = SimpleConvNet({'kernel_size': 7, 'feature_pos': 'post', 'norm': config.crit == 'end'})
 
     checkpoint = torch.load(os.path.join('checkpoints', config.crit, f'best{config.rho:.3f}.pth'), map_location='cpu')
     
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', type=str, default=f'{os.path.expanduser("~")}/data/MNIST')
     parser.add_argument('--rho', type=float, required=True)
-    parser.add_argument('--crit', type=str, choices=['vanilla', 'rubi', 'rebias', 'learned-mixin'], required=True)
+    parser.add_argument('--crit', type=str, choices=['vanilla', 'rubi', 'rebias', 'learned-mixin', 'end'], required=True)
     config = parser.parse_args()
 
     main(config)
