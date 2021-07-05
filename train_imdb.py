@@ -210,7 +210,7 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     f_outputs = torch.cat(f_outputs, dim=0)
 
     accs = {
-        'target': topk_accuracy(outputs, targets, topk=1),
+        #'target': topk_accuracy(outputs, targets, topk=1),
         'bias': topk_accuracy(outputs, bias_targets, topk=1),
         'f_target': topk_accuracy(f_outputs, targets, topk=1)
     }
@@ -228,9 +228,9 @@ def main(config):
     encoder = encoder.to(device)
     encoder.eval()
 
-    num_classes = 2
+    num_classes = 12
     if config.target_attr == 'age':
-        num_classes = 12
+        num_classes = 2
     classifier = nn.Sequential(
         nn.Linear(512, num_classes)
     ).to(device)
