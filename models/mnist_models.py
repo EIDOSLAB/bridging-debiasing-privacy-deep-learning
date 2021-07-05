@@ -38,8 +38,13 @@ class SimpleConvNet(nn.Module):
             nn.ReLU(inplace=True),
             nn.Conv2d(64, 128, kernel_size=kernel_size, padding=padding),
             nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
         ]
+
+        if norm:
+            layers.append(nn.Tanh())
+        else:
+            layers.append(nn.ReLU(inplace=True))
+        
         self.extracter = nn.Sequential(*layers)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.pattern_norm = pattern_norm()
