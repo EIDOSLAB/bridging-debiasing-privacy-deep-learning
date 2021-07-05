@@ -221,7 +221,7 @@ def main(config):
     utils.set_seed(config.seed)
 
     device = torch.device('cuda')
-    encoder = resnet18(n_classes=2)
+    encoder = resnet18(n_classes=2 if config.target_attr == 'gender' else 12)
 
     checkpoint = torch.load(os.path.join('checkpoints', 'imdb', config.split,  config.crit, f'model{config.target_attr}.pth'), map_location='cpu')
     encoder.load_state_dict(checkpoint['model'])
