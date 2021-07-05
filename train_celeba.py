@@ -7,6 +7,7 @@ import numpy as np
 import argparse
 import os
 
+import utils
 import wandb
 from tqdm import tqdm
 
@@ -166,6 +167,8 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     return {'loss': tot_loss / len(dataloader), 'accuracy': accs}
 
 def main(config):
+    utils.set_seed(config.seed)
+    
     device = torch.device('cuda')
     encoder = resnet18(n_classes=2)
 
@@ -187,7 +190,7 @@ def main(config):
 
     wandb.init(
         project='rebias-classifiers',
-        job_type='bias-classifier',
+        job_type='bias-classifier-celeba',
         config=config
     )
 
@@ -214,6 +217,7 @@ if __name__ == '__main__':
     parser.add_argument('--target_attr', type=str, required=True)
     parser.add_argument('--crit', type=str, choices=['vanilla', 'end'], required=True)
     parser.add_argument('--batch_size', type=int, default=256)
+    parser.add_argument('--seed', type=int, default=42)
     config = parser.parse_args()
 
     main(config)
