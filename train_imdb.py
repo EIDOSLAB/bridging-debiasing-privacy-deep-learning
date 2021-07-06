@@ -208,7 +208,13 @@ def run(encoder, classifier, dataloader, criterion, optimizer, device):
     targets = torch.cat(targets, dim=0)
     bias_targets = torch.cat(bias_targets, dim=0)
     f_outputs = torch.cat(f_outputs, dim=0)
-
+    
+    if len(f_outputs.shape) == 1:
+        f_outputs = f_outputs[:, None]
+    
+    if f_outputs.shape[1] == 1:
+        f_outputs = (f_outputs > 0.5).int()
+    
     accs = {
         #'target': topk_accuracy(outputs, targets, topk=1),
         'bias': topk_accuracy(outputs, bias_targets, topk=1),
@@ -221,7 +227,7 @@ def main(config):
     utils.set_seed(config.seed)
 
     device = torch.device('cuda')
-    encoder = resnet18(n_classes=1 if config.target_attr == 'gender' else 12)
+    encoder = resnet18(n_classes=2 if config.target_attr == 'gender' else 12)
 
     checkpoint = torch.load(os.path.join('checkpoints', 'imdb', config.split,  config.crit, f'model{config.target_attr}.pth'), map_location='cpu')
     
