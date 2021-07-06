@@ -224,6 +224,11 @@ def main(config):
     encoder = resnet18(n_classes=2 if config.target_attr == 'gender' else 12)
 
     checkpoint = torch.load(os.path.join('checkpoints', 'imdb', config.split,  config.crit, f'model{config.target_attr}.pth'), map_location='cpu')
+    
+    for key in list(checkpoint['model'].keys()):
+        if 'm.' not in key:
+            checkpoint['model'][f'm.{key}'] = checkpoint['model'].pop(key)
+    
     encoder.load_state_dict(checkpoint['model'])
     encoder = encoder.to(device)
     encoder.eval()
