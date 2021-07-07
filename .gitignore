@@ -4,6 +4,7 @@ checkpoints*/
 scripts/
 *_old.*
 *_temp.*
+imdb_features*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
