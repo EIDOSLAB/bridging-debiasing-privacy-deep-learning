@@ -14,11 +14,8 @@ def get_mean_std(df):
     data = pca.fit_transform(df.iloc[:, 2:])
     data = np.array(data[:,0])
 
-    print(data.shape)
-    print(data[:10])
     idx_male = df.gender == 0
     idx_female = df.gender == 1
-    print(idx_male)
 
     male = data[idx_male]
     female = data[idx_female]
@@ -51,6 +48,8 @@ x_left, x_right = -3, 3
 x_axis = np.arange(x_left, x_right, 0.001)
 
 mean, std = get_mean_std(df_vanilla)
+print('mean', mean)
+print('std', std)
 
 fig = plt.figure(figsize=(7,5))
 ax = fig.add_subplot(111)
@@ -67,11 +66,12 @@ ax.fill_between(x_axis, y1=y, y2=y-y, alpha=0.1)
 ax.vlines(mean[1], ymin=0, ymax=y.max(), linestyle='--', color='gray')
 
 ax.legend()
-ax.set_xlabel('pca', loc='right')
-ax.set_xticks([mean[0], mean[1]])
-ax.set_xticklabels([r'$\mu_m$', r'$\mu_f$'])
+ax.set_xlabel('PC', loc='right')
+#ax.set_xticks([mean[0], mean[1]])
+#ax.set_xticklabels([r'$\mu_m$', r'$\mu_f$'])
 ax.set_xlim(x_left, x_right)
-
+plt.text(mean[0]-0.1, -0.1, r'$\mu_m$')
+plt.text(mean[1]-0.1, -0.1, r'$\mu_f$')
 ax.set_yticks([])
 ax.set_ylim(0, max(m1, m2) + 0.2)
 
@@ -85,6 +85,8 @@ plt.savefig('normal_vanilla.pdf', format='pdf', dpi=300, bbox_inches='tight', pa
 plt.show()
 
 mean, std = get_mean_std(df_end)
+print('mean', mean)
+print('std', std)
 
 fig = plt.figure(figsize=(7,5))
 ax = fig.add_subplot(111)
@@ -101,9 +103,11 @@ ax.fill_between(x_axis, y1=y, y2=y-y, alpha=0.1)
 ax.vlines(mean[1], ymin=0, ymax=y.max(), linestyle='--', color='gray')
 
 ax.legend()
-ax.set_xlabel('pca', loc='right')
-ax.set_xticks([mean[0]+0.1, mean[1]-0.1])
-ax.set_xticklabels([r'$\mu_m$', r'$\mu_f$'])
+ax.set_xlabel('PC', loc='right')
+#ax.set_xticks([mean[0]+0.1, mean[1]-0.1])
+#ax.set_xticklabels([r'$\mu_m$', r'$\mu_f$'])
+plt.text(mean[0], -0.05, r'$\mu_m$')
+plt.text(mean[1]-0.2, -0.05, r'$\mu_f$')
 ax.set_xlim(x_left, x_right)
 
 ax.set_yticks([])
