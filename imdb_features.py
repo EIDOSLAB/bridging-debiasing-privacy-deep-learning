@@ -177,7 +177,7 @@ def run(encoder, dataloader, device):
 
         features.append(feats)
         targets.append(target)
-        bias_targets.append(bias_targets)
+        bias_targets.append(bias_target)
 
     features = torch.cat(features, dim=0)
     targets = torch.cat(targets, dim=0)
