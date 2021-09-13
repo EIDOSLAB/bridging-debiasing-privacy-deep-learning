@@ -1,3 +1,7 @@
+wandb
+processed
+raw
+
 *.swp
 original/
 checkpoints*/
