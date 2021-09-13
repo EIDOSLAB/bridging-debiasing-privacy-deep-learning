@@ -1,4 +1,17 @@
-## Bridging the gap between debiasing and privacy for deep learning
+# Bridging the gap between debiasing and privacy for deep learning
+
+Enzo Tartaglione<sup>1</sup>, Carlo Alberto Barbano<sup>1</sup>, Marco Grangetto<sup>1</sup>
+
+1<sub>University of Turin, Computer Science dept.</sub>
+<br/>
+
+<p>
+The broad availability of computational resources and the recent scientific progresses made deep learning the elected class of algorithms to solve complex tasks.  
+Besides their deployment, two problems have risen: fighting biases in data and privacy preservation of sensitive attributes. 
+Many solutions have been proposed, some of which deepen their roots in the pre-deep learning theory.
+There are many similarities between debiasing and privacy preserving approaches: how far apart are these two worlds, when the private information overlaps the bias?
+In this work we investigate the possibility of deploying debiasing strategies also to prevent privacy leakage. In particular, empirically testing on state-of-the-art datasets, we observe that there exists a subset of debiasing approaches which are also suitable for privacy preservation. We identify as the discrimen the capability of effectively hiding the biased information, rather than simply re-weighting it.
+</p><br/>
 
 ![scatter](resources/scatter.png)
 
