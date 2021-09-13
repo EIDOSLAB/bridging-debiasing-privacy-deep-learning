@@ -1,8 +1,9 @@
 # Bridging the gap between debiasing and privacy for deep learning
 
-Enzo Tartaglione<sup>1</sup>, Carlo Alberto Barbano<sup>1</sup>, Marco Grangetto<sup>1</sup>
+Carlo Alberto Barbano<sup>1</sup>, Enzo Tartaglione<sup>1,2</sup>, Marco Grangetto<sup>1</sup>
 
-1<sub>University of Turin, Computer Science dept.</sub>
+1<sub>University of Turin, Computer Science dept.</sub><br>
+2<sub>Télécom Paris, Paris, France</sub>
 <br/>
 
 <p>
