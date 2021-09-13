@@ -2,6 +2,7 @@ wandb
 processed
 raw
 *.pth
+*.pt
 
 *.swp
 original/
@@ -117,7 +118,6 @@ venv.bak/
 
 rebis_baselines
 
-checkpoints/
 
 nsml_run_gsheet.py
 main_toy_3d_m_2d.py
