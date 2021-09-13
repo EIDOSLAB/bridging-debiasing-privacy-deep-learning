@@ -1,10 +1,10 @@
 wandb
 processed
 raw
+*.pth
 
 *.swp
 original/
-checkpoints*/
 scripts/
 *_old.*
 *_temp.*
