@@ -1,6 +1,6 @@
-# Bridging the gap between debiasing and privacy for deep learning
+# Bridging the gap between debiasing and privacy for deep learning 
 
-Carlo Alberto Barbano<sup>1</sup>, Enzo Tartaglione<sup>1,2</sup>, Marco Grangetto<sup>1</sup>
+Carlo Alberto Barbano<sup>1</sup>, Enzo Tartaglione<sup>1,2</sup>, Marco Grangetto<sup>1</sup> | [[pdf](https://openaccess.thecvf.com/content/ICCV2021W/RPRMI/html/Barbano_Bridging_the_Gap_Between_Debiasing_and_Privacy_for_Deep_Learning_ICCVW_2021_paper.html)]
 
 1<sub>University of Turin, Computer Science dept.</sub><br>
 2<sub>Télécom Paris, Paris, France</sub>
@@ -30,3 +30,18 @@ Download pretrained checkpoints from: https://datacloud.di.unito.it/index.php/s/
 - For training MNIST bias classifiers (attack) use [train_classifier.sh](https://github.com/EIDOSlab/bridging-debiasing-privacy-deep-learning/blob/master/src/train_classifier.sh)
 
 - For training bias classifiers (attack) on CelebA and IMDB refer to [train_celeba.py](https://github.com/EIDOSlab/bridging-debiasing-privacy-deep-learning/blob/master/src/train_celeba.py) and [train_imdb.py](https://github.com/EIDOSlab/bridging-debiasing-privacy-deep-learning/blob/master/src/train_imdb.py) (you must download the pretrained Vanilla and EnD checkpoints). If you want to train these models by yourself, refer to the hyperparm search described in the [EnD paper](https://openaccess.thecvf.com/content/CVPR2021/html/Tartaglione_EnD_Entangling_and_Disentangling_Deep_Representations_for_Bias_Correction_CVPR_2021_paper.html)
+
+## Citing
+
+For citing our work, please use the following bibtex entry:
+
+```bibtex
+@InProceedings{Barbano_2021_ICCV,
+    author    = {Barbano, Carlo Alberto and Tartaglione, Enzo and Grangetto, Marco},
+    title     = {Bridging the Gap Between Debiasing and Privacy for Deep Learning},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) Workshops},
+    month     = {October},
+    year      = {2021},
+    pages     = {3806-3815}
+}
+```
